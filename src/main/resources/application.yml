@@ -1,0 +1,28 @@
+app : IMS
+version: v1.0
+
+server:
+  port: 8080
+  servlet:
+    context-path: /ims
+
+management:
+  server:
+    port: 9080
+
+spring:
+  application:
+    name: inventory-management-system
+  datasource:
+    ims-ds:
+      url: jdbc:postgresql://localhost:5432/postgres?currentSchema=inventory
+      jdbcUrl: ${spring.datasource.ims-ds.url}
+      username: postgres
+      password: postgres
+      driver-class-name: org.postgresql.Driver
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [App: ${app:-},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}] [%thread] %-5level %logger %M [line-%L] - %msg%n"
+
+
