@@ -16,6 +16,7 @@ public class Inventory {
     private String productId;
     @NotEmpty(message = "Category is mandatory")
     private String category;
+    private String catalogId;
     private Double quantityCases;
     private Integer quantityUnits;
     private Double volume;

@@ -21,6 +21,8 @@ public class InventoryEntity {
     private String productId;
     @Column(name = "CATEGORY")
     private String category;
+    @Column(name = "CATALOG_ID")
+    private String catalogId;
     @Column(name = "QUANTITY_CASES")
     private Double quantityCases;
     @Column(name = "QUANTITY_UNITS")
