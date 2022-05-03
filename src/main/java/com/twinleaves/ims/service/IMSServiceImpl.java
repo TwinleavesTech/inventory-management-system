@@ -1,5 +1,6 @@
 package com.twinleaves.ims.service;
 
+import com.twinleaves.ims.annotation.LogExecutionTime;
 import com.twinleaves.ims.controller.IMSController;
 import com.twinleaves.ims.dao.InventoryDAOService;
 import com.twinleaves.ims.entity.InventoryEntity;
@@ -35,6 +36,7 @@ public class IMSServiceImpl implements IMSService {
      * @param inventory Inventory
      * @return Inventory
      */
+    @LogExecutionTime("Adding inventory to DB")
     @Override
     public Inventory addInventory(Inventory inventory) {
         InventoryEntity inventoryEntity = inventoryDAOService.saveInventory(inventoryMapper.inventoryToInventoryEntity(inventory));
