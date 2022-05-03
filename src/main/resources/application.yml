@@ -23,6 +23,6 @@ spring:
 
 logging:
   pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} [App: ${app:-},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}] [%thread] %-5level %logger %M [line-%L] - %msg%n"
+    console: "%d{yyyy-MM-dd HH:mm:ss} [${spring.application.name:-},%X{traceId:-},%X{spanId:-}] [%thread] %-5level %logger %M [line-%L] - %msg%n"
 
 
