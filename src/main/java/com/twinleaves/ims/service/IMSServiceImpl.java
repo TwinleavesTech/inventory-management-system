@@ -9,12 +9,14 @@ import com.twinleaves.ims.model.Inventory;
 import com.twinleaves.ims.model.InventoryFilter;
 import com.twinleaves.ims.model.InventoryFilterData;
 import com.twinleaves.ims.model.InventoryStockInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class IMSServiceImpl implements IMSService {
@@ -38,10 +40,17 @@ public class IMSServiceImpl implements IMSService {
      */
     @LogExecutionTime("Adding inventory to DB")
     @Override
-    public Inventory addInventory(Inventory inventory) {
-        InventoryEntity inventoryEntity = inventoryDAOService.saveInventory(inventoryMapper.inventoryToInventoryEntity(inventory));
-        log.info("inventoryEntity::: " + inventoryEntity);
-        Inventory detail = inventoryMapper.inventoryEntityToInventory(inventoryEntity);
+    public Inventory addInventory(final Inventory inventory) {
+        InventoryEntity inventoryEntity;
+        Inventory detail = null;
+        try {
+            inventoryEntity = inventoryDAOService.saveInventory(inventoryMapper.inventoryToInventoryEntity(inventory));
+            log.info("Saved inventory data ::: " + inventoryEntity);
+            detail = inventoryMapper.inventoryEntityToInventory(inventoryEntity);
+        } catch (Exception e) {
+            log.error("Exception occurred while saving inventory entity to DB", e);
+            throw e;
+        }
         return detail;
     }
 
@@ -50,9 +59,22 @@ public class IMSServiceImpl implements IMSService {
      * @param inventoryId String
      * @return Inventory
      */
+    @LogExecutionTime("Fetching Inventory from DB")
     @Override
-    public Inventory getInventoryById(String inventoryId) {
-        return null;
+    public Inventory getInventoryById(final String inventoryId) {
+        Inventory inventory = null;
+        if (StringUtils.isNoneEmpty(inventoryId)) {
+            try {
+                InventoryEntity inventoryEntity = inventoryDAOService.fetchInventoryEntityByID(inventoryId);
+                if (inventoryEntity != null) {
+                    log.info("Fetched inventory for inventoryId {} ", inventoryId);
+                    inventory = inventoryMapper.inventoryEntityToInventory(inventoryEntity);
+                }
+            } catch (NoSuchElementException e) {
+                log.info("No such InventoryEntity for inventoryID - {}", inventoryId);
+            }
+        }
+        return inventory;
     }
 
     /**
@@ -61,7 +83,7 @@ public class IMSServiceImpl implements IMSService {
      * @return Inventory
      */
     @Override
-    public Inventory updateConsumedInventoryStock(InventoryStockInfo consumedInventoryStockInfo) {
+    public Inventory updateConsumedInventoryStock(final InventoryStockInfo consumedInventoryStockInfo) {
         return null;
     }
 

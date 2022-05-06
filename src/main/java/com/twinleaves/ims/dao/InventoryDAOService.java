@@ -15,4 +15,9 @@ public class InventoryDAOService {
         InventoryEntity entity = inventoryRepository.save(inventoryEntity);
         return entity;
     }
+
+    public InventoryEntity fetchInventoryEntityByID(final String inventoryId) {
+        InventoryEntity inventoryEntity = inventoryRepository.findById(inventoryId).get();
+        return inventoryEntity;
+    }
 }

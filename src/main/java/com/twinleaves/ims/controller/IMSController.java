@@ -27,7 +27,7 @@ import javax.validation.Valid;
 @RequestMapping("/api")
 public class IMSController {
 
-    private static final Logger logger = LoggerFactory.getLogger(IMSController.class);
+    private static final Logger log = LoggerFactory.getLogger(IMSController.class);
 
     @Value("${version}")
     private String version;
