@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 @Component
@@ -30,10 +32,17 @@ public class RequestResponseLoggerFilter implements Filter {
         log.info("Request URI: {}" , customHttpRequestWrapper.getRequestURI());
         log.info("Request Method: {}", customHttpRequestWrapper.getMethod());
         Iterator<String> headers = customHttpRequestWrapper.getHeaderNames().asIterator();
+        String headerName;
+        Map<String, String> headersMap = new LinkedHashMap<>();
         while (headers.hasNext()) {
-            String headerName = headers.next();
-            log.info("Header - {} : {}", headerName, customHttpRequestWrapper.getHeader(headerName));
+            headerName = headers.next();
+            headersMap.put(headerName, customHttpRequestWrapper.getHeader(headerName));
+//            log.info("Header - {} : {}", headerName, customHttpRequestWrapper.getHeader(headerName));
         }
+        log.info("Request Headers: {}" , headersMap);
+        customHttpRequestWrapper.getParameterMap().forEach((k,v) -> {
+            log.info("Request Param - {} : {}", k, v);
+        });
         log.info("Request Body: {}", new String(customHttpRequestWrapper.getByteArray()));
 
         chain.doFilter(customHttpRequestWrapper, customHttpServletResponseWrapper);
