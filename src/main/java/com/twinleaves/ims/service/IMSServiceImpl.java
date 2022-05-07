@@ -142,10 +142,6 @@ public class IMSServiceImpl implements IMSService {
         if (CollectionUtils.isNotEmpty(inventoryFilter.getLocationType())) {
             queryBuilder.addParameterWithEnabledCriteria("LOCATION_TYPE", "LOCATION_TYPE", inventoryFilter.getLocationType());
         }
-        // LOCATION_TYPE filter criteria
-        if (CollectionUtils.isNotEmpty(inventoryFilter.getLocationType())) {
-            queryBuilder.addParameterWithEnabledCriteria("LOCATION_TYPE", "LOCATION_TYPE", inventoryFilter.getLocationType());
-        }
         // SOURCE_INVENTORY filter criteria
         if (CollectionUtils.isNotEmpty(inventoryFilter.getSourceInventory())) {
             queryBuilder.addParameterWithEnabledCriteria("SOURCE_INVENTORY", "SOURCE_INVENTORY", inventoryFilter.getSourceInventory());
