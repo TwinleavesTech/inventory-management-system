@@ -11,7 +11,7 @@ public class CustomDelegatingServletInputStream extends ServletInputStream {
 
     private final InputStream sourceStream;
 
-    private boolean finished = false;
+    private boolean finished;
 
     /**
      * Create a DelegatingServletInputStream for the given source stream.

@@ -1,6 +1,5 @@
 package com.twinleaves.ims;
 
-import com.twinleaves.ims.model.Inventory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;

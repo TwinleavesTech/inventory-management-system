@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class CustomDateStringValidator implements ConstraintValidator<ValidCustomDateString, String> {
 
-    private String dateFormat = null;
+    private String dateFormat;
     private boolean isMandatory;
 
     @Override
