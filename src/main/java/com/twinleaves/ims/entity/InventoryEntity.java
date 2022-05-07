@@ -1,12 +1,11 @@
 package com.twinleaves.ims.entity;
 
 import com.twinleaves.ims.constants.DBConstants;
+import com.twinleaves.ims.sequence.TimeStampPrefixedSequenceIdGenerator;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -15,6 +14,13 @@ import java.util.Date;
 public class InventoryEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = DBConstants.INVENTORY_SEQUENCE)
+    @GenericGenerator(name = DBConstants.INVENTORY_SEQUENCE,
+            strategy =  "com.twinleaves.ims.sequence.TimeStampPrefixedSequenceIdGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = TimeStampPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = ""),
+                    @org.hibernate.annotations.Parameter(name = TimeStampPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%05d")
+            })
     @Column(name = "INVENTORY_ID")
     private String inventoryId;
     @Column(name = "PRODUCT_ID")
