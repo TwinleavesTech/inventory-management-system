@@ -79,7 +79,7 @@ public class IMSController {
             , @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorMessage.class)))
         }
     )
-    @PutMapping(value = "/inventory-list", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/inventory-list", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getInventoryBasedOnFilter(@Valid @RequestBody final InventoryFilter inventoryFilter) {
         InventoryFilterData inventoryFilterData = imsService.getInventoryListFilterData(inventoryFilter);
         return new ResponseEntity(inventoryFilterData, HttpStatus.OK);
