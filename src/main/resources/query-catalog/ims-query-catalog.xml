@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key = "inventory-filter-query"> <![CDATA[
+SELECT
+	invt.*
+FROM
+	inventory invt
+WHERE
+	1 = 1
+	--<INVENTORY_ID> and invt.inventory_id in (:INVENTORY_ID)
+	--<PRODUCT_ID> and invt.product_id in (:PRODUCT_ID)
+	--<CATEGORY> and invt.category in (:CATEGORY)
+	--<LOCATION_ID> and invt.location_id in (:LOCATION_ID)
+	--<LOCATION_TYPE> and invt.location_type in (:LOCATION_TYPE)
+	--<SOURCE_INVENTORY> and invt.source_inventory in (:SOURCE_INVENTORY)
+	--<IS_DELETED> and invt.is_deleted = :IS_DELETED
+    ]]>
+    </entry>
+</properties>
