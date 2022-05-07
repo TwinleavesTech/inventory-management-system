@@ -4,6 +4,7 @@ import com.twinleaves.ims.annotation.LogExecutionTime;
 import com.twinleaves.ims.controller.IMSController;
 import com.twinleaves.ims.dao.InventoryDAOService;
 import com.twinleaves.ims.entity.InventoryEntity;
+import com.twinleaves.ims.exception.ResourceNotFoundException;
 import com.twinleaves.ims.mappers.InventoryMapper;
 import com.twinleaves.ims.model.Inventory;
 import com.twinleaves.ims.model.InventoryFilter;
@@ -108,11 +109,23 @@ public class IMSServiceImpl implements IMSService {
     }
 
     /**
-     * Marks a inventory as deleted.
+     * Marks inventory as deleted.
      * @param inventoryId String
      */
     @Override
-    public void deleteInventory(String inventoryId) {
-
+    public void deleteInventory(final String inventoryId) {
+        if (StringUtils.isNoneEmpty(inventoryId)) {
+            try {
+                inventoryDAOService.deleteInventory(inventoryId);
+            } catch (NoSuchElementException e) {
+                log.info("No such InventoryEntity for inventoryID - {}", inventoryId);
+                throw new ResourceNotFoundException("No such inventory");
+            } catch (Exception e) {
+                log.error("Exception occurred while deleting inventory - {}", inventoryId, e);
+                throw e;
+            }
+        } else {
+            throw new ResourceNotFoundException("No such inventory");
+        }
     }
 }
