@@ -98,13 +98,17 @@ public class IMSServiceImpl implements IMSService {
      */
     @Override
     public void updateConsumedInventoryStock(final InventoryStockInfo consumedInventoryStockInfo) {
-        try {
-            inventoryDAOService.updateConsumedStockInfo(consumedInventoryStockInfo);
-        } catch (NoSuchElementException e) {
-            log.info("No such InventoryEntity for inventoryID - {}", consumedInventoryStockInfo.getInventoryId());
+        if (consumedInventoryStockInfo != null && StringUtils.isNotEmpty(consumedInventoryStockInfo.getInventoryId())) {
+            try {
+                inventoryDAOService.updateConsumedStockInfo(consumedInventoryStockInfo);
+            } catch (NoSuchElementException e) {
+                log.info("No such InventoryEntity for inventoryID - {}", consumedInventoryStockInfo.getInventoryId());
+                throw new ResourceNotFoundException("No such inventory");
+            } catch (Exception e) {
+                log.error("Exception occurred while updating inventory stock info", e);
+            }
+        } else {
             throw new ResourceNotFoundException("No such inventory");
-        } catch (Exception e) {
-            log.error("Exception occurred while updating inventory stock info", e);
         }
     }
 

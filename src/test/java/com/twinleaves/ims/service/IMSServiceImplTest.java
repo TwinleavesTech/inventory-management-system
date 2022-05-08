@@ -7,6 +7,7 @@ import com.twinleaves.ims.mappers.InventoryMapper;
 import com.twinleaves.ims.model.Inventory;
 import com.twinleaves.ims.model.InventoryFilter;
 import com.twinleaves.ims.model.InventoryFilterData;
+import com.twinleaves.ims.model.InventoryStockInfo;
 import com.twinleaves.ims.repository.InventoryRepository;
 import org.apache.commons.collections.CollectionUtils;
 import org.junit.jupiter.api.BeforeAll;
@@ -192,4 +193,50 @@ class IMSServiceImplTest {
         });
     }
 
+    @Test
+    void updateConsumedInventoryStock_with_success_criteria() {
+        InventoryStockInfo inventoryStockInfo = new InventoryStockInfo();
+        inventoryStockInfo.setInventoryId("123");
+        inventoryStockInfo.setQuantityCases(2.0);
+        inventoryStockInfo.setQuantityUnits(20);
+        InventoryEntity inventoryEntity = new InventoryEntity();
+        inventoryEntity.setQuantityCases(2.0);
+        inventoryEntity.setQuantityUnits(30);
+        doReturn(Optional.of(inventoryEntity)).when(inventoryRepository).findById(inventoryStockInfo.getInventoryId());
+        doReturn(null).when(inventoryRepository).save(any(InventoryEntity.class));
+        assertDoesNotThrow(() -> {
+            imsServiceImpl.updateConsumedInventoryStock(inventoryStockInfo);
+        });
+    }
+
+    @Test
+    void updateConsumedInventoryStock_with_null_inventory_id_criteria() {
+        InventoryStockInfo inventoryStockInfo = new InventoryStockInfo();
+        inventoryStockInfo.setInventoryId(null);
+        inventoryStockInfo.setQuantityCases(2.0);
+        inventoryStockInfo.setQuantityUnits(20);
+        InventoryEntity inventoryEntity = new InventoryEntity();
+        inventoryEntity.setQuantityCases(2.0);
+        inventoryEntity.setQuantityUnits(30);
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
+            imsServiceImpl.updateConsumedInventoryStock(inventoryStockInfo);
+        });
+        assertNotNull(exception, "Should throw exception");
+    }
+
+    @Test
+    void updateConsumedInventoryStock_with_invalid_inventory_id_criteria() {
+        InventoryStockInfo inventoryStockInfo = new InventoryStockInfo();
+        inventoryStockInfo.setInventoryId("8900");
+        inventoryStockInfo.setQuantityCases(2.0);
+        inventoryStockInfo.setQuantityUnits(20);
+        InventoryEntity inventoryEntity = new InventoryEntity();
+        inventoryEntity.setQuantityCases(2.0);
+        inventoryEntity.setQuantityUnits(30);
+        doThrow(new NoSuchElementException()).when(inventoryRepository).findById(inventoryStockInfo.getInventoryId());
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
+            imsServiceImpl.updateConsumedInventoryStock(inventoryStockInfo);
+        });
+        assertNotNull(exception, "Should throw exception");
+    }
 }
