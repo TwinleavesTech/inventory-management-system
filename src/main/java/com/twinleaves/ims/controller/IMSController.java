@@ -6,6 +6,7 @@ import com.twinleaves.ims.exception.ResourceNotFoundException;
 import com.twinleaves.ims.model.Inventory;
 import com.twinleaves.ims.model.InventoryFilter;
 import com.twinleaves.ims.model.InventoryFilterData;
+import com.twinleaves.ims.model.InventoryStockInfo;
 import com.twinleaves.ims.service.IMSService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -95,6 +96,19 @@ public class IMSController {
     @DeleteMapping(value = "/inventory/{inventory-id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity deleteInventory(@Valid @PathVariable("inventory-id") final String inventoryId) {
         imsService.deleteInventory(inventoryId);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "Update Inventory stock info")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode =  "200", description = "Success")
+            , @ApiResponse(responseCode = "204", description = "Not Found")
+            , @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorMessage.class)))
+        }
+    )
+    @PatchMapping(value = "/inventory-stock", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity updateStockInfo(@Valid @RequestBody final InventoryStockInfo inventoryStockInfo) {
+        imsService.updateConsumedInventoryStock(inventoryStockInfo);
         return ResponseEntity.ok().build();
     }
 }

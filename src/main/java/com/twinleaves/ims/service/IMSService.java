@@ -13,9 +13,7 @@ public interface IMSService {
 
     Inventory getInventoryById(final String inventoryId);
 
-    Inventory updateConsumedInventoryStock(final InventoryStockInfo consumedInventoryStockInfo);
-
-    List<Inventory> getInventoryListByFilter(final InventoryFilter inventoryFilter);
+    void updateConsumedInventoryStock(final InventoryStockInfo consumedInventoryStockInfo);
 
     InventoryFilterData getInventoryListFilterData(final InventoryFilter inventoryFilter);
 
