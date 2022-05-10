@@ -50,6 +50,7 @@ public class Inventory {
     private String itemType;
     private String stockType;
     private String batchNo;
+    private String tenantId;
     private String style;
     private String isDeleted;
 }

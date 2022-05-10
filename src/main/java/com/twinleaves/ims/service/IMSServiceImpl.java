@@ -218,6 +218,7 @@ public class IMSServiceImpl implements IMSService {
         inventory.setStyle(sqlRowSet.getString("STYLE"));
         inventory.setIsDeleted(sqlRowSet.getString("IS_DELETED"));
         inventory.setCatalogId(sqlRowSet.getString("CATALOG_ID"));
+        inventory.setTenantId(sqlRowSet.getString("TENANT_ID"));
         return inventory;
     }
 }

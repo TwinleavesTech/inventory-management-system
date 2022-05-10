@@ -81,6 +81,8 @@ public class InventoryEntity {
     private String stockType;
     @Column(name = "BATCH_NO")
     private String batchNo;
+    @Column(name = "TENANT_ID")
+    private String tenantId;
     @Column(name = "STYLE")
     private String style;
     @Column(name = "IS_DELETED")
