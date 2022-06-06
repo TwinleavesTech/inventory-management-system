@@ -87,6 +87,7 @@ public class InventoryEntity {
     private String style;
     @Column(name = "IS_DELETED")
     private String isDeleted;
-
+    @Column(name = "VERSION")
+    private Integer version;
 
 }

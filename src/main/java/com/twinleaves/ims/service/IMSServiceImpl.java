@@ -4,6 +4,7 @@ import com.twinleaves.ims.annotation.LogExecutionTime;
 import com.twinleaves.ims.controller.IMSController;
 import com.twinleaves.ims.dao.InventoryDAOService;
 import com.twinleaves.ims.entity.InventoryEntity;
+import com.twinleaves.ims.exception.IMSException;
 import com.twinleaves.ims.exception.ResourceNotFoundException;
 import com.twinleaves.ims.mappers.InventoryMapper;
 import com.twinleaves.ims.model.Inventory;
@@ -104,8 +105,11 @@ public class IMSServiceImpl implements IMSService {
             } catch (NoSuchElementException e) {
                 log.info("No such InventoryEntity for inventoryID - {}", consumedInventoryStockInfo.getInventoryId());
                 throw new ResourceNotFoundException("No such inventory");
+            } catch(IMSException e) {
+                throw e;
             } catch (Exception e) {
                 log.error("Exception occurred while updating inventory stock info", e);
+                throw e;
             }
         } else {
             throw new ResourceNotFoundException("No such inventory");

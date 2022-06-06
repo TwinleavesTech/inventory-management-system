@@ -53,4 +53,5 @@ public class Inventory {
     private String tenantId;
     private String style;
     private String isDeleted;
+    private Integer version;
 }
